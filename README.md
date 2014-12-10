@@ -11,15 +11,24 @@ Usage
 myCollection = new Collection();
 ```
 
-**Add element**
-An element is simply a javascript object
-```javascript
-myElement = {
-    name: 'My Name',
-    age: 34
-}
-```
-
-```javascript
-myCollection.addElement(myElement);
-```
+### Functions
+ - `addElement({Object})`: Add an object to the object collection
+ - `getElements()`: Get all objects currently in the collection
+ - `count()`: Returns number of objects in the collection
+ - `getKeys()`: Returns an array of the collection keys
+ - `containsKey(key)`: Check if a key exists or not
+ - `getByKey(key)`: Get a object by key
+ - `removeByKey(key)`: Remove a object by key
+ - `set(key, {Object})`: Replace object with key
+ - `first()`: Get the first object in the collection
+ - `last()`: Get the last object in the collection
+ - `key()`: Returns current iterator position
+ - `next()`: Returns current object and increases the iterator
+ - `hasNext()`: Returns true or false if the collection has more objects
+ - `current()`: Returns current object
+ - `rewind()`: Resets the iterator
+ - `clear()`: Clear the collection, remove all items
+ - `setArray()`: Fill the collection with a array
+ - `each(callback(key, value))`: Iterate through all elements
+ - `orderBy(property, direction)`: Order elements by object property and direction
+ 
