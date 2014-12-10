@@ -1,4 +1,6 @@
-'use strict';
+/*global Collection*/
+
+"use strict";
 
 var myElements = [
     {
