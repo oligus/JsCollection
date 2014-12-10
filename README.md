@@ -1,7 +1,7 @@
 JsCollection
 ============
 
-Js Collection is a simple object collection class, that is an array of objects that
+Js Collection is a simple object collection class, that is an array of objects.
 
 Usage
 -----
@@ -9,6 +9,18 @@ Usage
 **Construct**
 ```javascript
 myCollection = new Collection();
+```
+
+**Ordering**
+```javascript
+myCollection = new Collection();
+myCollection.setArray(myArrayOfObjects);
+
+myCollection.orderBy('name', 'desc');
+
+myCollection.each(function(key, value) {
+    ...
+});
 ```
 
 ### Functions
