@@ -57,10 +57,11 @@ var Collection = function() {
     this.getKeys = function() {
         var keys = [];
 
-        for (var key in elements) {
-            if (key === 'length' || !elements.hasOwnProperty(key)) continue;
-            keys.push(parseInt(key, 10));
-        }
+        self.each(function(key) {
+            if (key !== 'length' || elements.hasOwnProperty(key)) {
+                keys.push(parseInt(key, 10));
+            }
+        });
 
         return keys;
     };
@@ -152,8 +153,9 @@ var Collection = function() {
      */
     this.next = function() {
         if(self.hasNext()) {
+            var element = elements[index];
             index++;
-            return elements[index];
+            return element;
         }
     };
 
@@ -204,12 +206,46 @@ var Collection = function() {
         }
     };
 
+    /**
+     * Iterate via each
+     *
+     * @param callback
+     */
+    this.each = function(callback) {
+        for(var i = 0; i < self.count(); i++) {
+            callback(i, self.getByKey(i));
+        }
+    };
 
+    /**
+     * Order elements by property and direction
+     *
+     * @param property
+     * @param direction
+     */
     this.orderBy = function (property, direction) {
-        console.log(property);
-        console.log(direction);
+        direction = direction || 'asc';
 
+        elements.sort(function (a, b) {
 
+            if(!a.hasOwnProperty(property)) {
+                return false;
+            }
+            if (a[property] > b[property]) {
+                if(direction === 'desc') {
+                    return -1;
+                }
+                return 1;
+            }
+            if (a[property] < b[property]) {
+                if(direction === 'desc') {
+                    return 1;
+                }
+                return -1;
+            }
+
+            return 0;
+        });
     };
 };
 

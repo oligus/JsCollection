@@ -6,19 +6,19 @@ var myElements = [
         id: 24
     },
     {
-        name: 'Test Test2',
+        name: 'Abba Test2',
         id: 10
     },
     {
-        name: 'Test Test3',
+        name: 'Zee Test3',
         id: 55
     },
     {
-        name: 'Test Test4',
+        name: 'Bentley Test4',
         id: 1
     },
     {
-        name: 'Test Test5',
+        name: 'Moo says the cow',
         id: 77
     }
 ];
@@ -86,11 +86,11 @@ describe('Collection', function() {
     });
 
     it('should set object with key if key exists', function() {
-        testCollection.set('f', myElements[0])
+        testCollection.set('f', myElements[0]);
         expect(testCollection.count()).toBe(3);
-        testCollection.set(0, myElements[0])
+        testCollection.set(0, myElements[0]);
         expect(testCollection.getByKey(0)).toEqual(myElements[0]);
-        testCollection.set(20, myElements[1])
+        testCollection.set(20, myElements[1]);
         expect(testCollection.getByKey(20)).toEqual(undefined);
     });
 
@@ -102,14 +102,15 @@ describe('Collection', function() {
         expect(testCollection.last()).toEqual(myElements[4]);
     });
 
+
     it('should have iterator functionality', function() {
         expect(testCollection.current()).toEqual(myElements[0]);
         expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.next()).toEqual(myElements[2]);
+        expect(testCollection.next()).toEqual(myElements[0]);
         expect(testCollection.current()).toEqual(myElements[2]);
         expect(testCollection.hasNext()).toBeTruthy();
         expect(testCollection.key()).toEqual(1);
-        expect(testCollection.next()).toEqual(myElements[4]);
+        expect(testCollection.next()).toEqual(myElements[2]);
         expect(testCollection.current()).toEqual(myElements[4]);
         expect(testCollection.hasNext()).toBeFalsy();
         expect(testCollection.key()).toEqual(2);
@@ -118,6 +119,7 @@ describe('Collection', function() {
         expect(testCollection.hasNext()).toBeTruthy();
     });
 
+
     it('should be able to reset and set array', function() {
         testCollection.clear();
         expect(testCollection.getElements()).toEqual([]);
@@ -125,9 +127,29 @@ describe('Collection', function() {
         expect(testCollection.count()).toEqual(5);
     });
 
-    /*
-    it('should order array', function() {
-        testCollection.orderBy('name', 'asc');
+    it('should iterate with each', function() {
+        expect(testCollection.count()).toEqual(5);
+        testCollection.each(function (key, value) {
+            expect(value).toEqual(myElements[key]);
+        });
     });
-    */
+
+    it('should order by property', function() {
+        testCollection.orderBy('name', 'asc');
+        var testArray = [ { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 }, { name: 'Moo says the cow', id: 77 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 } ];
+        expect(testCollection.getElements()).toEqual(testArray);
+
+        testCollection.orderBy('name', 'desc');
+        testArray = [{name: 'Zee Test3', id: 55}, {name: 'Test Test1', id: 24}, {name: 'Moo says the cow', id: 77}, {name: 'Bentley Test4', id: 1}, {name: 'Abba Test2', id: 10}];
+        expect(testCollection.getElements()).toEqual(testArray);
+
+        testCollection.orderBy('id');
+        testArray = [ { name: 'Bentley Test4', id: 1 }, { name: 'Abba Test2', id: 10 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 }, { name: 'Moo says the cow', id: 77 } ];
+        expect(testCollection.getElements()).toEqual(testArray);
+
+        testCollection.orderBy('id', 'desc');
+        testArray = [ { name: 'Moo says the cow', id: 77 }, { name: 'Zee Test3', id: 55 }, { name: 'Test Test1', id: 24 }, { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 } ];
+        expect(testCollection.getElements()).toEqual(testArray);
+    });
+
 });
