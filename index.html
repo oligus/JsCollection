@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="JsCollection : Simplify your object array">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>JsCollection</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/oligus/JsCollection">View on GitHub</a>
+
+          <h1 id="project_title">JsCollection</h1>
+          <h2 id="project_tagline">Simplify your object array</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/oligus/JsCollection/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/oligus/JsCollection/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Js Collection is a simple object collection class, that is an array of objects.</p>
+
+<h3>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p><strong>Construct</strong></p>
+
+<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Collection</span>();</pre></div>
+
+<p><strong>Ordering</strong></p>
+
+<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Collection</span>();
+myCollection.setArray(myArrayOfObjects);
+
+myCollection.orderBy(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>desc<span class="pl-pds">'</span></span>);
+
+myCollection.each(<span class="pl-st">function</span>(<span class="pl-vpf">key</span>, <span class="pl-vpf">value</span>) {
+    ...
+});</pre></div>
+
+<h3>
+<a id="functions" class="anchor" href="#functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions</h3>
+
+<ul>
+<li>
+<code>addElement({Object})</code>: Add an object to the object collection</li>
+<li>
+<code>getElements()</code>: Get all objects currently in the collection</li>
+<li>
+<code>count()</code>: Returns number of objects in the collection</li>
+<li>
+<code>getKeys()</code>: Returns an array of the collection keys</li>
+<li>
+<code>containsKey(key)</code>: Check if a key exists or not</li>
+<li>
+<code>getByKey(key)</code>: Get a object by key</li>
+<li>
+<code>remove(key)</code>: Remove a object by key</li>
+<li>
+<code>replace(key, {Object})</code>: Replace object with key</li>
+<li>
+<code>first()</code>: Get the first object in the collection</li>
+<li>
+<code>last()</code>: Get the last object in the collection</li>
+<li>
+<code>position()</code>: Returns current iterator position</li>
+<li>
+<code>next()</code>: Returns current object and increases the iterator</li>
+<li>
+<code>hasNext()</code>: Returns true or false if the collection has more objects</li>
+<li>
+<code>current()</code>: Returns current object</li>
+<li>
+<code>rewind()</code>: Resets the iterator</li>
+<li>
+<code>clear()</code>: Clear the collection, remove all items</li>
+<li>
+<code>setArray()</code>: Fill the collection with a array</li>
+<li>
+<code>each(callback(key, value))</code>: Iterate through all elements</li>
+<li>
+<code>orderBy(property, direction)</code>: Order elements by object property and direction</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">JsCollection maintained by <a href="https://github.com/oligus">oligus</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
