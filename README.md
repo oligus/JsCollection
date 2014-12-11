@@ -30,11 +30,11 @@ myCollection.each(function(key, value) {
  - `getKeys()`: Returns an array of the collection keys
  - `containsKey(key)`: Check if a key exists or not
  - `getByKey(key)`: Get a object by key
- - `removeByKey(key)`: Remove a object by key
- - `set(key, {Object})`: Replace object with key
+ - `remove(key)`: Remove a object by key
+ - `replace(key, {Object})`: Replace object with key
  - `first()`: Get the first object in the collection
  - `last()`: Get the last object in the collection
- - `key()`: Returns current iterator position
+ - `position()`: Returns current iterator position
  - `next()`: Returns current object and increases the iterator
  - `hasNext()`: Returns true or false if the collection has more objects
  - `current()`: Returns current object

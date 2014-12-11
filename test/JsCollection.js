@@ -1,4 +1,4 @@
-/*global Collection*/
+/*global JsCollection*/
 
 "use strict";
 
@@ -25,12 +25,12 @@ var myElements = [
     }
 ];
 
-describe('Collection', function() {
+describe('JsCollection', function() {
 
-    var testCollection = new Collection();
+    var testCollection = new JsCollection();
 
     it('should be instance of Collection', function () {
-        expect(testCollection instanceof Collection).toBe(true);
+        expect(testCollection instanceof JsCollection).toBe(true);
     });
 
     it('should add elements to collection and count', function() {
@@ -73,11 +73,11 @@ describe('Collection', function() {
     });
 
     it('should remove object by key', function() {
-        expect(testCollection.removeByKey(0)).toEqual(myElements[0]);
+        expect(testCollection.remove(0)).toEqual(myElements[0]);
         expect(testCollection.count()).toBe(4);
-        expect(testCollection.removeByKey(2)).toEqual(myElements[3]);
+        expect(testCollection.remove(2)).toEqual(myElements[3]);
         expect(testCollection.count()).toBe(3);
-        expect(testCollection.removeByKey(99)).toEqual(undefined);
+        expect(testCollection.remove(99)).toEqual(undefined);
     });
 
     it('should return element objects', function() {
@@ -88,11 +88,11 @@ describe('Collection', function() {
     });
 
     it('should set object with key if key exists', function() {
-        testCollection.set('f', myElements[0]);
+        testCollection.replace('f', myElements[0]);
         expect(testCollection.count()).toBe(3);
-        testCollection.set(0, myElements[0]);
+        testCollection.replace(0, myElements[0]);
         expect(testCollection.getByKey(0)).toEqual(myElements[0]);
-        testCollection.set(20, myElements[1]);
+        testCollection.replace(20, myElements[1]);
         expect(testCollection.getByKey(20)).toEqual(undefined);
     });
 
@@ -104,29 +104,44 @@ describe('Collection', function() {
         expect(testCollection.last()).toEqual(myElements[4]);
     });
 
-
-    it('should have iterator functionality', function() {
-        expect(testCollection.current()).toEqual(myElements[0]);
-        expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.next()).toEqual(myElements[0]);
-        expect(testCollection.current()).toEqual(myElements[2]);
-        expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.key()).toEqual(1);
-        expect(testCollection.next()).toEqual(myElements[2]);
-        expect(testCollection.current()).toEqual(myElements[4]);
-        expect(testCollection.hasNext()).toBeFalsy();
-        expect(testCollection.key()).toEqual(2);
-        expect(testCollection.rewind()).toEqual(myElements[0]);
-        expect(testCollection.key()).toEqual(0);
-        expect(testCollection.hasNext()).toBeTruthy();
-    });
-
-
     it('should be able to reset and set array', function() {
         testCollection.clear();
         expect(testCollection.getElements()).toEqual([]);
         testCollection.setArray(myElements);
         expect(testCollection.count()).toEqual(5);
+    });
+
+    it('should have next, hasNext and current functionality', function() {
+        expect(testCollection.current()).toEqual(myElements[0]);
+        expect(testCollection.hasNext()).toBeTruthy();
+        expect(testCollection.next()).toEqual(myElements[0]);
+        expect(testCollection.current()).toEqual(myElements[1]);
+        expect(testCollection.hasNext()).toBeTruthy();
+        expect(testCollection.position()).toEqual(1);
+        expect(testCollection.next()).toEqual(myElements[1]);
+        expect(testCollection.current()).toEqual(myElements[2]);
+        expect(testCollection.hasNext()).toBeTruthy();
+        expect(testCollection.position()).toEqual(2);
+        expect(testCollection.next()).toEqual(myElements[2]);
+        expect(testCollection.current()).toEqual(myElements[3]);
+        expect(testCollection.hasNext()).toBeTruthy();
+        expect(testCollection.position()).toEqual(3);
+        expect(testCollection.next()).toEqual(myElements[3]);
+        expect(testCollection.current()).toEqual(myElements[4]);
+        expect(testCollection.hasNext()).toBeTruthy();
+        expect(testCollection.position()).toEqual(4);
+        expect(testCollection.next()).toEqual(myElements[4]);
+        expect(testCollection.current()).toEqual(myElements[5]);
+        expect(testCollection.hasNext()).toBeFalsy();
+        expect(testCollection.position()).toEqual(5);
+    });
+
+    it('should iterate', function() {
+        expect(testCollection.rewind()).toEqual(myElements[0]);
+        var i = 0;
+        while(testCollection.hasNext()) {
+            expect(testCollection.next()).toEqual(myElements[i++]);
+        }
     });
 
     it('should iterate with each', function() {
