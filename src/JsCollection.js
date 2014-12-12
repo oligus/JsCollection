@@ -16,8 +16,6 @@
             pager       = {},
             self        = this;
 
-
-
         /**
          * Private: check if integer
          *
@@ -109,6 +107,7 @@
          * @returns {*}
          */
         this.remove = function(key) {
+            key = key || position;
             if(self.containsKey(key)) {
                 var removed = self.getByKey(key);
                 elements.splice(key, 1);
