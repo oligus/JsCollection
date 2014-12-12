@@ -312,7 +312,7 @@
 
         this.getPager = function () {
             return pager;
-        }
+        };
     }
 
     window.JsCollection = JsCollection;
