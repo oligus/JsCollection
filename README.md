@@ -1,7 +1,7 @@
 JsCollection
 ============
 
-Js Collection is a simple object collection class, that is an array of objects.
+Js Collection is a simple object collection class used to simplify using array of objects.
 
 Usage
 -----
@@ -11,16 +11,55 @@ Usage
 myCollection = new JsCollection();
 ```
 
-**Ordering**
+####Add elements to your collection
+#####Within a loop
+Adds a single object at the end of the array collection
+
 ```javascript
-myCollection = new JsCollection();
+myCollection.addElement(myObject);
+```
+#####Complete array
+You can set an array of objects directly
+```javascript
 myCollection.setArray(myArrayOfObjects);
+```
+####Iteration
+You can iterate the collection in multiple ways:
 
+**each**
+```javascript
+myCollection.each(function(key, element) {}):
+```
+
+**while**
+```javascript
+while(myCollection.hasNext()) {
+    element = testCollection.next();
+}
+```
+**for**
+```javascript
+for(var i = 0; i < testCollection.count(); i++) {
+    element = testCollection.getByKey(i);
+}
+```
+**Iterator functions**
+
+
+| Function | Description |
+| :------- | :---------- |
+| `count()`  | Returns number of objects in the collection |
+| `position()`  | Returns the current iterator position |
+| `first()`  | Returns the first element in the collection |
+| `last()`  | Returns the last element in the collection |
+| `current()`  | Returns current element according to the iterator position |
+| `next()`  | Returns current element then increases the iterator position by one |
+| `hasNext()`  | Returns true or false if the collection has more elements |
+| `rewind()`| Resets the iterator position and returns the first element in the collection |
+
+####Ordering
+```javascript
 myCollection.orderBy('name', 'desc');
-
-myCollection.each(function(key, value) {
-    ...
-});
 ```
 
 ### Functions
