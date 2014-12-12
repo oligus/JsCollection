@@ -5,6 +5,7 @@ node_js:
 before_install:
   - 'npm install -g grunt-cli'
   - 'npm install grunt'
+  - 'npm install -g karma-cli'
   - 'npm install karma'
   - 'npm install karma-chrome-launcher'
   - 'npm install karma-jasmine'
