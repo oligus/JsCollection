@@ -1,5 +1,6 @@
-JsCollection [![Build Status](https://travis-ci.org/oligus/JsCollection.svg?branch=master)](https://travis-ci.org/oligus/JsCollection)
+JsCollection
 ============
+[![Build Status](https://travis-ci.org/oligus/JsCollection.svg?branch=master)](https://travis-ci.org/oligus/JsCollection)
 
 Js Collection is a simple object collection class used to simplify using array of objects.
 
