@@ -31,25 +31,105 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Js Collection is a simple object collection class, that is an array of objects.</p>
+        <h1>
+<a id="jscollection" class="anchor" href="#jscollection" aria-hidden="true"><span class="octicon octicon-link"></span></a>JsCollection</h1>
 
-<h3>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+<p>Js Collection is a simple object collection class used to simplify using array of objects.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
 <p><strong>Construct</strong></p>
 
-<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Collection</span>();</pre></div>
+<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">JsCollection</span>();</pre></div>
 
-<p><strong>Ordering</strong></p>
+<h4>
+<a id="add-elements-to-your-collection" class="anchor" href="#add-elements-to-your-collection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add elements to your collection</h4>
 
-<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Collection</span>();
-myCollection.setArray(myArrayOfObjects);
+<h5>
+<a id="within-a-loop" class="anchor" href="#within-a-loop" aria-hidden="true"><span class="octicon octicon-link"></span></a>Within a loop</h5>
 
-myCollection.orderBy(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>desc<span class="pl-pds">'</span></span>);
+<p>Adds a single object at the end of the array collection</p>
 
-myCollection.each(<span class="pl-st">function</span>(<span class="pl-vpf">key</span>, <span class="pl-vpf">value</span>) {
-    ...
-});</pre></div>
+<div class="highlight highlight-javascript"><pre>myCollection.addElement(myObject);</pre></div>
+
+<h5>
+<a id="complete-array" class="anchor" href="#complete-array" aria-hidden="true"><span class="octicon octicon-link"></span></a>Complete array</h5>
+
+<p>You can set an array of objects directly</p>
+
+<div class="highlight highlight-javascript"><pre>myCollection.setArray(myArrayOfObjects);</pre></div>
+
+<h4>
+<a id="iteration" class="anchor" href="#iteration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Iteration</h4>
+
+<p>You can iterate the collection in multiple ways:</p>
+
+<p><strong>each</strong></p>
+
+<div class="highlight highlight-javascript"><pre>myCollection.each(<span class="pl-st">function</span>(<span class="pl-vpf">key</span>, <span class="pl-vpf">element</span>) {})<span class="pl-k">:</span></pre></div>
+
+<p><strong>while</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">while</span>(myCollection.hasNext()) {
+    element <span class="pl-k">=</span> testCollection.<span class="pl-sc">next</span>();
+}</pre></div>
+
+<p><strong>for</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="pl-k">for</span>(<span class="pl-s">var</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>; i <span class="pl-k">&lt;</span> testCollection.count(); i<span class="pl-k">++</span>) {
+    element <span class="pl-k">=</span> testCollection.getByKey(i);
+}</pre></div>
+
+<p><strong>Iterator functions</strong></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>count()</code></td>
+<td align="left">Returns number of objects in the collection</td>
+</tr>
+<tr>
+<td align="left"><code>position()</code></td>
+<td align="left">Returns the current iterator position</td>
+</tr>
+<tr>
+<td align="left"><code>first()</code></td>
+<td align="left">Returns the first element in the collection</td>
+</tr>
+<tr>
+<td align="left"><code>last()</code></td>
+<td align="left">Returns the last element in the collection</td>
+</tr>
+<tr>
+<td align="left"><code>current()</code></td>
+<td align="left">Returns current element according to the iterator position</td>
+</tr>
+<tr>
+<td align="left"><code>next()</code></td>
+<td align="left">Returns current element then increases the iterator position by one</td>
+</tr>
+<tr>
+<td align="left"><code>hasNext()</code></td>
+<td align="left">Returns true or false if the collection has more elements</td>
+</tr>
+<tr>
+<td align="left"><code>rewind()</code></td>
+<td align="left">Resets the iterator position and returns the first element in the collection</td>
+</tr>
+</tbody>
+</table>
+
+<h4>
+<a id="ordering" class="anchor" href="#ordering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ordering</h4>
+
+<div class="highlight highlight-javascript"><pre>myCollection.orderBy(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>, <span class="pl-s1"><span class="pl-pds">'</span>desc<span class="pl-pds">'</span></span>);</pre></div>
 
 <h3>
 <a id="functions" class="anchor" href="#functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functions</h3>
