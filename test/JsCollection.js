@@ -169,4 +169,28 @@ describe('JsCollection', function() {
         expect(testCollection.getElements()).toEqual(testArray);
     });
 
+    it('should insert before and after current', function() {
+        testCollection.clear();
+        testCollection.setArray(myElements);
+        expect(testCollection.next()).toEqual(myElements[0]);
+        expect(testCollection.next()).toEqual(myElements[1]);
+        expect(testCollection.current()).toEqual(myElements[2]);
+
+        testCollection.insertBefore({ name: 'Before', id: 22 });
+        expect(testCollection.position()).toEqual(3);
+        expect(testCollection.current()).toEqual(myElements[3]);
+        expect(testCollection.count()).toEqual(6);
+
+        testCollection.insertAfter({ name: 'After', id: 22 });
+        expect(testCollection.position()).toEqual(3);
+        expect(testCollection.current()).toEqual(myElements[3]);
+        expect(testCollection.count()).toEqual(7);
+    });
+
+    /**
+     * Pager functions
+     */
+    it('should paginate', function() {
+        console.log(testCollection.getPager());
+    });
 });

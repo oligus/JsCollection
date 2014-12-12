@@ -8,12 +8,12 @@ Usage
 
 **Construct**
 ```javascript
-myCollection = new Collection();
+myCollection = new JsCollection();
 ```
 
 **Ordering**
 ```javascript
-myCollection = new Collection();
+myCollection = new JsCollection();
 myCollection.setArray(myArrayOfObjects);
 
 myCollection.orderBy('name', 'desc');

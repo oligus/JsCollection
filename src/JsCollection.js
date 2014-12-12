@@ -1,5 +1,6 @@
 /*global window */
-"use strict";
+
+'use strict';
 
 ( function( window, undefined ) {
 
@@ -12,7 +13,10 @@
 
         var elements    = [],
             position    = 0,
+            pager       = {},
             self        = this;
+
+
 
         /**
          * Private: check if integer
@@ -42,6 +46,7 @@
         this.addElement  = function(element) {
             if(typeof element === 'object' && element !== null) {
                 elements.push(element);
+                self.updatePager();
             }
         };
 
@@ -107,6 +112,7 @@
             if(self.containsKey(key)) {
                 var removed = self.getByKey(key);
                 elements.splice(key, 1);
+                self.updatePager();
                 return removed;
             }
         };
@@ -208,7 +214,7 @@
          * @param element
          */
         this.insertBefore = function(element) {
-
+            elements.splice(position++, 0, element);
         };
 
         /**
@@ -217,7 +223,7 @@
          * @param element
          */
         this.insertAfter = function(element) {
-
+            elements.splice(position + 1, 0, element);
         };
 
         /**
@@ -228,6 +234,7 @@
         this.setArray = function(newArray) {
             if(isArray(newArray) && newArray.length) {
                 elements = newArray;
+                self.updatePager();
             }
         };
 
@@ -273,6 +280,40 @@
                 return 0;
             });
         };
+
+        /**
+         * Pager functions
+         */
+        pager.elementsPerPage  = 10;
+        pager.currentPage   = 1;
+        pager.numberOfPages = 0;
+
+        this.setElementsPerPage = function(elementsPerPage) {
+            pager.elementsPerPage = elementsPerPage;
+            self.updatePager();
+        };
+
+        this.getNumberOfPages = function () {
+            return Math.ceil(self.count() / pager.elementsPerPage);
+        };
+
+        this.updatePager = function() {
+            pager.numberOfPages = self.getNumberOfPages();
+        };
+
+        this.getPageElements = function () {
+            var start = pager.elementsPerPage * (pager.currentPage - 1),
+                end = start + pager.elementsPerPage;
+            return elements.slice(start, end);
+        };
+
+        this.setCurrentPage = function (currentPage) {
+            pager.currentPage = currentPage;
+        };
+
+        this.getPager = function () {
+            return pager;
+        }
     }
 
     window.JsCollection = JsCollection;

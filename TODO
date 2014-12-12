@@ -1,5 +1,4 @@
 
-insertBefore and insertAfter
 
 remove should change to removeByKey, add remove that removes current
 
