@@ -98,7 +98,7 @@
 <td align="left">Returns number of objects in the collection</td>
 </tr>
 <tr>
-<td align="left"><code>position()</code></td>
+<td align="left"><code>getPosition()</code></td>
 <td align="left">Returns the current iterator position</td>
 </tr>
 <tr>
@@ -138,43 +138,43 @@
 
 <ul>
 <li>
-<code>addElement({Object})</code>: Add an object to the object collection</li>
+<code>addElement(element)</code>: Add an element to the collection</li>
 <li>
-<code>getElements()</code>: Get all objects currently in the collection</li>
+<code>getElements()</code>: Get all elements currently in the collection</li>
 <li>
-<code>count()</code>: Returns number of objects in the collection</li>
+<code>getElement(key|null)</code>: If key is defined get element by key, else get current element</li>
+<li>
+<code>count()</code>: Returns number of elements in the collection</li>
 <li>
 <code>getKeys()</code>: Returns an array of the collection keys</li>
 <li>
 <code>containsKey(key)</code>: Check if a key exists or not</li>
 <li>
-<code>getByKey(key)</code>: Get a object by key</li>
+<code>remove(key|null)</code>: If key is defined remove element by key, else remove current element</li>
 <li>
-<code>remove(key)</code>: Remove a object by key</li>
+<code>replace(key, element)</code>: Replace object with key</li>
 <li>
-<code>replace(key, {Object})</code>: Replace object with key</li>
+<code>first()</code>: Get the first element in the collection</li>
 <li>
-<code>first()</code>: Get the first object in the collection</li>
+<code>last()</code>: Get the last element in the collection</li>
 <li>
-<code>last()</code>: Get the last object in the collection</li>
-<li>
-<code>position()</code>: Returns current iterator position</li>
+<code>getPosition()</code>: Returns current iterator position</li>
 <li>
 <code>next()</code>: Returns current object and increases the iterator</li>
 <li>
-<code>hasNext()</code>: Returns true or false if the collection has more objects</li>
+<code>hasNext()</code>: Returns true or false if the collection has more elements</li>
 <li>
-<code>current()</code>: Returns current object</li>
+<code>current()</code>: Returns current element</li>
 <li>
 <code>rewind()</code>: Resets the iterator</li>
 <li>
-<code>clear()</code>: Clear the collection, remove all items</li>
+<code>clear()</code>: Clear the collection, remove all elements</li>
 <li>
 <code>setArray()</code>: Fill the collection with a array</li>
 <li>
 <code>each(callback(key, value))</code>: Iterate through all elements</li>
 <li>
-<code>orderBy(property, direction)</code>: Order elements by object property and direction</li>
+<code>orderBy(property, direction)</code>: Order elements by element property and direction</li>
 </ul>
       </section>
     </div>
