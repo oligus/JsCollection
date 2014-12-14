@@ -34,16 +34,29 @@
         <h1>
 <a id="jscollection" class="anchor" href="#jscollection" aria-hidden="true"><span class="octicon octicon-link"></span></a>JsCollection</h1>
 
+<h3>
+<a id="simplify-your-object-array" class="anchor" href="#simplify-your-object-array" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simplify your object array</h3>
+
 <p><a href="https://travis-ci.org/oligus/JsCollection"><img src="https://travis-ci.org/oligus/JsCollection.svg?branch=master" alt="Build Status"></a></p>
 
-<p>Js Collection is a simple object collection class used to simplify using array of objects.</p>
+<p>Js Collection is an object collection class used to simplify using array of objects. This pattern or methodology rather, is commonly used in oo designs. Together with iterator functionality it simplifies traversal and manipulation of objects during the iteration and adds commonality to your arrays.</p>
 
 <h2>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
 
-<p><strong>Construct</strong></p>
+<p><strong>Example</strong></p>
 
-<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">JsCollection</span>();</pre></div>
+<div class="highlight highlight-javascript"><pre>myCollection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">JsCollection</span>(myArrayOfObjects);
+
+<span class="pl-k">while</span>(myCollection.hasNext()) {
+    element <span class="pl-k">=</span> testCollection.<span class="pl-sc">next</span>();
+    element.<span class="pl-st">function</span><span class="pl-en">Call</span>();
+}
+
+myCollection.orderBy(<span class="pl-s1"><span class="pl-pds">'</span>name<span class="pl-pds">'</span></span>);
+myElements <span class="pl-k">=</span> myCollection.getElements();
+
+</pre></div>
 
 <h4>
 <a id="add-elements-to-your-collection" class="anchor" href="#add-elements-to-your-collection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add elements to your collection</h4>
