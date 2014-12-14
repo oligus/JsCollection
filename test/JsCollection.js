@@ -265,31 +265,5 @@ describe('JsCollection', function() {
         testArray = [ { name: 'Moo says the cow', id: 77 }, { name: 'Zee Test3', id: 55 }, { name: 'Test Test1', id: 24 }, { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 } ];
         expect(testCollection.getElements()).toEqual(testArray);
     });
-    /*
 
-    it('should order by property', function() {
-        testCollection.orderBy('name', 'asc');
-        var testArray = [ { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 }, { name: 'Moo says the cow', id: 77 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
-
-        testCollection.orderBy('name', 'desc');
-        testArray = [{name: 'Zee Test3', id: 55}, {name: 'Test Test1', id: 24}, {name: 'Moo says the cow', id: 77}, {name: 'Bentley Test4', id: 1}, {name: 'Abba Test2', id: 10}];
-        expect(testCollection.getElements()).toEqual(testArray);
-
-        testCollection.orderBy('id');
-        testArray = [ { name: 'Bentley Test4', id: 1 }, { name: 'Abba Test2', id: 10 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 }, { name: 'Moo says the cow', id: 77 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
-
-        testCollection.orderBy('id', 'desc');
-        testArray = [ { name: 'Moo says the cow', id: 77 }, { name: 'Zee Test3', id: 55 }, { name: 'Test Test1', id: 24 }, { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
-    });
-
-
-
-    it('should paginate', function() {
-        console.log(testCollection.getPager());
-    });
-
-    */
 });

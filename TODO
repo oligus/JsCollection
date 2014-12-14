@@ -1,5 +1,8 @@
 
 
-remove should change to removeByKey, add remove that removes current
+* Filter
+Filter the collection on object properties
 
-offsets
+* Pagination
+Return subset of the array
+

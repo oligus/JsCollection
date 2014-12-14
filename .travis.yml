@@ -9,3 +9,4 @@ before_install:
   - 'npm install karma'
   - 'npm install karma-chrome-launcher'
   - 'npm install karma-jasmine'
+after_script: "npm install coveralls@2 && cat ./coverage/lcov.info | coveralls"
