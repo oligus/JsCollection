@@ -1,319 +1,169 @@
 /*global window */
 
+/**
+ * JsCollection
+ *
+ * Simplify your array of objects
+ */
+
 'use strict';
 
 ( function( window, undefined ) {
 
-    /**
-     * JsCollection
-     *
-     * @constructor
-     */
-    function JsCollection() {
+    function JsCollection(elementsArray) {
+        this.elements   = [];
+        this.position   = 0;
 
-        var elements    = [],
-            position    = 0,
-            pager       = {},
-            self        = this;
+        if(this.isArray(elementsArray) && elementsArray.length) {
+            this.setArray(elementsArray);
+        }
+    }
 
-        /**
-         * Private: check if integer
-         *
-         * @param n
-         * @returns {boolean}
-         */
-        var isInt = function (n) {
-            return Number(n) === n && n % 1 === 0;
-        };
+    JsCollection.prototype.isInt = function (n) {
+        return Number(n) === n && n % 1 === 0;
+    };
 
-        /**
-         * Private: check if array
-         *
-         * @param a
-         * @returns {boolean}
-         */
-        var isArray = function (a) {
-            return Object.prototype.toString.call(a) === '[object Array]';
-        };
+    JsCollection.prototype.isArray = function (a) {
+        return Object.prototype.toString.call(a) === '[object Array]';
+    };
 
-        /**
-         * Add element object to the collection
-         *
-         * @param element
-         */
-        this.addElement  = function(element) {
-            if(typeof element === 'object' && element !== null) {
-                elements.push(element);
-                self.updatePager();
+    JsCollection.prototype.getPosition = function() {
+        return this.position;
+    };
+
+    JsCollection.prototype.addElement = function (element) {
+        if(typeof element === 'object' && element !== null) {
+            this.elements.push(element);
+        }
+    };
+
+    JsCollection.prototype.getElements = function() {
+        return this.elements;
+    };
+
+    JsCollection.prototype.getElement = function(key) {
+        key = key || this.position;
+        if(this.containsKey(key)) {
+            return this.elements[key];
+        }
+    };
+
+    JsCollection.prototype.count = function () {
+        return this.elements.length;
+    };
+
+    // XXX Needs to be revised
+    JsCollection.prototype.getKeys = function() {
+        var keys = [];
+        for (var key in this.elements) {
+            if (key === 'length' || this.elements.hasOwnProperty(key)) {
+                keys.push(parseInt(key, 10));
             }
-        };
+        }
+        return keys;
+    };
 
-        this.getElements = function() {
-            return elements;
-        };
+    JsCollection.prototype.containsKey = function (key) {
+        return (undefined !== this.elements[key]);
+    };
 
-        /**
-         * Count number of elements in the collection
-         *
-         * @returns {Number}
-         */
-        this.count = function() {
-            return elements.length;
-        };
+    JsCollection.prototype.remove = function (key) {
+        key = key || this.position;
+        if(this.containsKey(key)) {
+            var removed = this.getElement(key);
+            this.elements.splice(key, 1);
+            return removed;
+        }
+    };
 
-        /**
-         * Return array keys as integers
-         *
-         * @returns {Array}
-         */
-        this.getKeys = function() {
-            var keys = [];
+    JsCollection.prototype.next = function() {
+        if(this.hasNext()) {
+            return this.elements[this.position++];
+        }
+    };
 
-            self.each(function(key) {
-                if (key !== 'length' || elements.hasOwnProperty(key)) {
-                    keys.push(parseInt(key, 10));
-                }
-            });
+    JsCollection.prototype.hasNext = function() {
+        return this.position < this.count();
+    };
 
-            return keys;
-        };
+    JsCollection.prototype.replace = function(key, element) {
+        if(this.isInt(key) &&  this.containsKey(key) && typeof element === 'object' && element !== null && element !== undefined) {
+            this.elements[key] = element;
+        }
+    };
 
-        /**
-         * Elements contain key
-         *
-         * @param key
-         * @returns {boolean}
-         */
-        this.containsKey = function(key) {
-            return (undefined !== elements[key]);
-        };
+    JsCollection.prototype.first = function() {
+        if(this.containsKey(0)) {
+            return this.elements[0];
+        }
+    };
 
-        /**
-         * Return element by key id
-         *
-         * @param key
-         * @returns {*}
-         */
-        this.getByKey = function(key) {
-            if(self.containsKey(key)) {
-                return elements[key];
+    JsCollection.prototype.last = function() {
+        var last = this.count() - 1;
+        if(this.containsKey(last)) {
+            return this.elements[last];
+        }
+    };
+
+    JsCollection.prototype.clear = function() {
+        this.elements = [];
+        this.position = 0;
+    };
+
+    JsCollection.prototype.setArray = function (elementsArray) {
+        if(this.isArray(elementsArray) && elementsArray.length) {
+            this.elements = elementsArray.slice(0);
+        }
+    };
+
+    JsCollection.prototype.current = function () {
+        return this.elements[this.position];
+    };
+
+    JsCollection.prototype.rewind = function () {
+        this.position = 0;
+        return this.elements[this.position];
+    };
+
+    JsCollection.prototype.insertBefore = function (element) {
+        this.elements.splice(this.position++, 0, element);
+    };
+
+    JsCollection.prototype.insertAfter = function (element) {
+        this.elements.splice(this.position + 1, 0, element);
+    };
+
+    JsCollection.prototype.each = function (callback) {
+        for(var i = 0, count = this.count(); i < count; i++) {
+            callback(i, this.getElement(i));
+        }
+    };
+
+    JsCollection.prototype.orderBy = function (property, direction) {
+        direction = direction || 'asc';
+
+        this.elements.sort(function (a, b) {
+
+            if(!a.hasOwnProperty(property)) {
+                return false;
             }
-        };
 
-        /**
-         * Removes element by key, returns the removed object if in fact it was deleted.
-         *
-         * @param key
-         * @returns {*}
-         */
-        this.remove = function(key) {
-            key = key || position;
-            if(self.containsKey(key)) {
-                var removed = self.getByKey(key);
-                elements.splice(key, 1);
-                self.updatePager();
-                return removed;
-            }
-        };
-
-        /**
-         * Replace element by key
-         *
-         * @param key
-         * @param element
-         */
-        this.replace = function(key, element) {
-            if(isInt(key) &&  self.containsKey(key) && typeof element === 'object' && element !== null && element !== undefined) {
-                elements[key] = element;
-            }
-        };
-
-        /**
-         * Get first element
-         *
-         * @returns {*}
-         */
-        this.first = function() {
-            if(self.containsKey(0)) {
-                return elements[0];
-            }
-        };
-
-        /**
-         * Get last element
-         *
-         * @returns {*}
-         */
-        this.last = function() {
-            var last = self.count() - 1;
-            if(self.containsKey(last)) {
-                return elements[last];
-            }
-        };
-
-        /**
-         * Returns current iterator position
-         *
-         * @returns {number}
-         */
-        this.position = function() {
-            return position;
-        };
-
-        /**
-         * Increment the position and return next element
-         *
-         * @returns {*}
-         */
-        this.next = function() {
-            if(self.hasNext()) {
-                return elements[position++];
-            }
-        };
-
-        /**
-         * Do we have next
-         *
-         * @returns {boolean}
-         */
-        this.hasNext = function() {
-            return position < self.count();
-        };
-
-        /**
-         * Return current element by position
-         *
-         * @returns {*}
-         */
-        this.current = function() {
-            return elements[position];
-        };
-
-        /**
-         * Rewind the position and return the first element
-         *
-         * @returns {*}
-         */
-        this.rewind = function() {
-            position = 0;
-            return elements[position];
-        };
-
-        /**
-         * Clear the elements and resets position
-         */
-        this.clear = function() {
-            elements = [];
-            position = 0;
-        };
-
-        /**
-         * Insert element before current element
-         *
-         * @param element
-         */
-        this.insertBefore = function(element) {
-            elements.splice(position++, 0, element);
-        };
-
-        /**
-         * Insert element after current element
-         *
-         * @param element
-         */
-        this.insertAfter = function(element) {
-            elements.splice(position + 1, 0, element);
-        };
-
-        /**
-         * Sets array
-         *
-         * @param newArray
-         */
-        this.setArray = function(newArray) {
-            if(isArray(newArray) && newArray.length) {
-                elements = newArray;
-                self.updatePager();
-            }
-        };
-
-        /**
-         * Iterate via each
-         *
-         * @param callback
-         */
-        this.each = function(callback) {
-            for(var i = 0; i < self.count(); i++) {
-                callback(i, self.getByKey(i));
-            }
-        };
-
-        /**
-         * Order elements by property and direction
-         *
-         * @param property
-         * @param direction
-         */
-        this.orderBy = function (property, direction) {
-            direction = direction || 'asc';
-
-            elements.sort(function (a, b) {
-
-                if(!a.hasOwnProperty(property)) {
-                    return false;
-                }
-
-                if (a[property] > b[property]) {
-                    if(direction === 'desc') {
-                        return -1;
-                    }
-                    return 1;
-                }
-                if (a[property] < b[property]) {
-                    if(direction === 'desc') {
-                        return 1;
-                    }
+            if (a[property] > b[property]) {
+                if(direction === 'desc') {
                     return -1;
                 }
+                return 1;
+            }
+            if (a[property] < b[property]) {
+                if(direction === 'desc') {
+                    return 1;
+                }
+                return -1;
+            }
 
-                return 0;
-            });
-        };
-
-        /**
-         * Pager functions
-         */
-        pager.elementsPerPage  = 10;
-        pager.currentPage   = 1;
-        pager.numberOfPages = 0;
-
-        this.setElementsPerPage = function(elementsPerPage) {
-            pager.elementsPerPage = elementsPerPage;
-            self.updatePager();
-        };
-
-        this.getNumberOfPages = function () {
-            return Math.ceil(self.count() / pager.elementsPerPage);
-        };
-
-        this.updatePager = function() {
-            pager.numberOfPages = self.getNumberOfPages();
-        };
-
-        this.getPageElements = function () {
-            var start = pager.elementsPerPage * (pager.currentPage - 1),
-                end = start + pager.elementsPerPage;
-            return elements.slice(start, end);
-        };
-
-        this.setCurrentPage = function (currentPage) {
-            pager.currentPage = currentPage;
-        };
-
-        this.getPager = function () {
-            return pager;
-        };
-    }
+            return 0;
+        });
+    };
 
     window.JsCollection = JsCollection;
 
