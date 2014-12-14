@@ -50,7 +50,7 @@ for(var i = 0; i < testCollection.count(); i++) {
 | Function | Description |
 | :------- | :---------- |
 | `count()`  | Returns number of objects in the collection |
-| `position()`  | Returns the current iterator position |
+| `getPosition()`  | Returns the current iterator position |
 | `first()`  | Returns the first element in the collection |
 | `last()`  | Returns the last element in the collection |
 | `current()`  | Returns current element according to the iterator position |
@@ -64,23 +64,23 @@ myCollection.orderBy('name', 'desc');
 ```
 
 ### Functions
- - `addElement({Object})`: Add an object to the object collection
- - `getElements()`: Get all objects currently in the collection
- - `count()`: Returns number of objects in the collection
+ - `addElement(element)`: Add an element to the collection
+ - `getElements()`: Get all elements currently in the collection
+ - `getElement(key|null)`: If key is defined get element by key, else get current element
+ - `count()`: Returns number of elements in the collection
  - `getKeys()`: Returns an array of the collection keys
  - `containsKey(key)`: Check if a key exists or not
- - `getByKey(key)`: Get a object by key
- - `remove(key)`: Remove a object by key
- - `replace(key, {Object})`: Replace object with key
- - `first()`: Get the first object in the collection
- - `last()`: Get the last object in the collection
- - `position()`: Returns current iterator position
+ - `remove(key|null)`: If key is defined remove element by key, else remove current element
+ - `replace(key, element)`: Replace object with key
+ - `first()`: Get the first element in the collection
+ - `last()`: Get the last element in the collection
+ - `getPosition()`: Returns current iterator position
  - `next()`: Returns current object and increases the iterator
- - `hasNext()`: Returns true or false if the collection has more objects
- - `current()`: Returns current object
+ - `hasNext()`: Returns true or false if the collection has more elements
+ - `current()`: Returns current element
  - `rewind()`: Resets the iterator
- - `clear()`: Clear the collection, remove all items
+ - `clear()`: Clear the collection, remove all elements
  - `setArray()`: Fill the collection with a array
  - `each(callback(key, value))`: Iterate through all elements
- - `orderBy(property, direction)`: Order elements by object property and direction
+ - `orderBy(property, direction)`: Order elements by element property and direction
  
