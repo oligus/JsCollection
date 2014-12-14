@@ -1,15 +1,26 @@
 JsCollection
 ============
+###Simplify your object array
 [![Build Status](https://travis-ci.org/oligus/JsCollection.svg?branch=master)](https://travis-ci.org/oligus/JsCollection)
 
-Js Collection is a simple object collection class used to simplify using array of objects.
+Js Collection is an object collection class used to simplify using array of objects. This pattern or methodology rather, is commonly used in oo designs. Together with iterator functionality it simplifies traversal and manipulation of objects during the iteration and adds commonality to your arrays.
 
 Usage
 -----
 
-**Construct**
+**Example**
 ```javascript
-myCollection = new JsCollection();
+myCollection = new JsCollection(myArrayOfObjects);
+
+while(myCollection.hasNext()) {
+    element = testCollection.next();
+    element.functionCall();
+}
+
+myCollection.orderBy('name');
+myElements = myCollection.getElements();
+
+
 ```
 
 ####Add elements to your collection
