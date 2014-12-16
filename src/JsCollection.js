@@ -31,17 +31,17 @@
         return this.iteratorPosition;
     };
 
-    JsCollection.prototype.addElement = function (element) {
+    JsCollection.prototype.add = function (element) {
         if(typeof element === 'object' && element !== null) {
             this.elements.push(element);
         }
     };
 
-    JsCollection.prototype.getElements = function() {
+    JsCollection.prototype.getAll = function() {
         return this.elements;
     };
 
-    JsCollection.prototype.getElement = function(key) {
+    JsCollection.prototype.get = function(key) {
         key = key || this.iteratorPosition;
         if(this.containsKey(key)) {
             return this.elements[key];
@@ -70,7 +70,7 @@
     JsCollection.prototype.remove = function (key) {
         key = key || this.iteratorPosition;
         if(this.containsKey(key)) {
-            var removed = this.getElement(key);
+            var removed = this.get(key);
             this.elements.splice(key, 1);
             return removed;
         }
@@ -135,7 +135,7 @@
 
     JsCollection.prototype.each = function (callback) {
         for(var i = 0, count = this.count(); i < count; i++) {
-            callback(i, this.getElement(i));
+            callback(i, this.get(i));
         }
     };
 

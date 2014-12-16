@@ -55,23 +55,23 @@ describe('JsCollection', function() {
     it('should add elements to the collection', function() {
         var testCollection = new JsCollection(),
             testCollection2 = new JsCollection();
-        testCollection.addElement(myElements[0]);
-        testCollection2.addElement(myElements[0]);
-        testCollection2.addElement(myElements[1]);
+        testCollection.add(myElements[0]);
+        testCollection2.add(myElements[0]);
+        testCollection2.add(myElements[1]);
         expect(testCollection.count()).toBe(1);
-        testCollection.addElement(myElements[1]);
+        testCollection.add(myElements[1]);
         expect(testCollection.count()).toBe(2);
-        testCollection.addElement(myElements[2]);
+        testCollection.add(myElements[2]);
         expect(testCollection.count()).toBe(3);
-        testCollection.addElement(myElements[3]);
+        testCollection.add(myElements[3]);
         expect(testCollection.count()).toBe(4);
-        testCollection.addElement(myElements[4]);
+        testCollection.add(myElements[4]);
         expect(testCollection.count()).toBe(5);
-        testCollection.addElement('Not an object');
+        testCollection.add('Not an object');
         expect(testCollection.count()).toBe(5);
-        testCollection.addElement(function() {});
+        testCollection.add(function() {});
         expect(testCollection.count()).toBe(5);
-        testCollection.addElement(null);
+        testCollection.add(null);
         expect(testCollection.count()).toBe(5);
         expect(testCollection2.count()).toBe(2);
     });
@@ -93,27 +93,27 @@ describe('JsCollection', function() {
 
     it('should return element by key', function() {
         var testCollection = new JsCollection(myElements);
-        expect(testCollection.getElement(0)).toEqual(myElements[0]);
-        expect(testCollection.getElement(1)).toEqual(myElements[1]);
-        expect(testCollection.getElement(2)).toEqual(myElements[2]);
-        expect(testCollection.getElement(3)).toEqual(myElements[3]);
+        expect(testCollection.get(0)).toEqual(myElements[0]);
+        expect(testCollection.get(1)).toEqual(myElements[1]);
+        expect(testCollection.get(2)).toEqual(myElements[2]);
+        expect(testCollection.get(3)).toEqual(myElements[3]);
     });
 
     it('should return element by position', function() {
         var testCollection = new JsCollection(myElements);
         testCollection.next();
-        expect(testCollection.getElement()).toEqual(myElements[1]);
+        expect(testCollection.get()).toEqual(myElements[1]);
         testCollection.next();
         testCollection.next();
-        expect(testCollection.getElement()).toEqual(myElements[3]);
+        expect(testCollection.get()).toEqual(myElements[3]);
         testCollection.next();
         testCollection.next();
-        expect(testCollection.getElement()).toEqual(undefined);
+        expect(testCollection.get()).toEqual(undefined);
     });
 
     it('should return all elements', function() {
         var testCollection = new JsCollection(myElements);
-        expect(testCollection.getElements()).toEqual(myElements)
+        expect(testCollection.getAll()).toEqual(myElements)
     });
 
     it('should remove element by key', function() {
@@ -139,9 +139,9 @@ describe('JsCollection', function() {
         testCollection.replace('f', myElements[0]);
         expect(testCollection.count()).toBe(5);
         testCollection.replace(3, myElements[0]);
-        expect(testCollection.getElement(3)).toEqual(myElements[0]);
+        expect(testCollection.get(3)).toEqual(myElements[0]);
         testCollection.replace(20, myElements[1]);
-        expect(testCollection.getElement(20)).toEqual(undefined);
+        expect(testCollection.get(20)).toEqual(undefined);
     });
 
     it('should have first', function() {
@@ -165,7 +165,7 @@ describe('JsCollection', function() {
     it('should clear elements', function() {
         var testCollection = new JsCollection(myElements);
         testCollection.clear();
-        expect(testCollection.getElements()).toEqual([]);
+        expect(testCollection.getAll()).toEqual([]);
     });
 
     it('should be able to set array', function() {
@@ -251,19 +251,19 @@ describe('JsCollection', function() {
         var testCollection = new JsCollection(myElements);
         testCollection.orderBy('name', 'asc');
         var testArray = [ { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 }, { name: 'Moo says the cow', id: 77 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
+        expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('name', 'desc');
         testArray = [{name: 'Zee Test3', id: 55}, {name: 'Test Test1', id: 24}, {name: 'Moo says the cow', id: 77}, {name: 'Bentley Test4', id: 1}, {name: 'Abba Test2', id: 10}];
-        expect(testCollection.getElements()).toEqual(testArray);
+        expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('id');
         testArray = [ { name: 'Bentley Test4', id: 1 }, { name: 'Abba Test2', id: 10 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 }, { name: 'Moo says the cow', id: 77 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
+        expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('id', 'desc');
         testArray = [ { name: 'Moo says the cow', id: 77 }, { name: 'Zee Test3', id: 55 }, { name: 'Test Test1', id: 24 }, { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 } ];
-        expect(testCollection.getElements()).toEqual(testArray);
+        expect(testCollection.getAll()).toEqual(testArray);
     });
 
 });

@@ -18,7 +18,7 @@ while(myCollection.hasNext()) {
 }
 
 myCollection.orderBy('name');
-myElements = myCollection.getElements();
+myArrayOfObjects = myCollection.getAll();
 
 
 ```
@@ -28,7 +28,7 @@ myElements = myCollection.getElements();
 Adds a single object at the end of the array collection
 
 ```javascript
-myCollection.addElement(myObject);
+myCollection.add(myObject);
 ```
 #####Complete array
 You can set an array of objects directly
@@ -75,9 +75,9 @@ myCollection.orderBy('name', 'desc');
 ```
 
 ### Functions
- - `addElement(element)`: Add an element to the collection
- - `getElements()`: Get all elements currently in the collection
- - `getElement(key|null)`: If key is defined get element by key, else get current element
+ - `add(element)`: Add an element to the collection
+ - `get(key|null)`: If key is defined get element by key, else get current element
+ - `getAll()`: Get all elements currently in the collection
  - `count()`: Returns number of elements in the collection
  - `getKeys()`: Returns an array of the collection keys
  - `containsKey(key)`: Check if a key exists or not
