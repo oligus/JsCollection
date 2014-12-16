@@ -1,6 +1,6 @@
 {
     "name": "jscollection",
-    "version" : "0.1.3",
+    "version" : "0.1.1",
     "description": "Object collection class, iterate and manipulate your array of objects.",
     "author": "Oli Gustafsson <oli.gustafsson@gmail.com>",
     "repository": {

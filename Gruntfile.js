@@ -29,7 +29,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'dist/<%= pkg.name %>.min.js': 'src/JsCollection.js'
+                    'dist/<%= pkg.name %>-<%= pkg.version %>.min.js': 'src/JsCollection.js'
                 }
             }
         },

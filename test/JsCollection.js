@@ -113,7 +113,7 @@ describe('JsCollection', function() {
 
     it('should return all elements', function() {
         var testCollection = new JsCollection(myElements);
-        expect(testCollection.getAll()).toEqual(myElements)
+        expect(testCollection.getAll()).toEqual(myElements);
     });
 
     it('should remove element by key', function() {
