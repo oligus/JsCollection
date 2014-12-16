@@ -61,7 +61,7 @@ for(var i = 0; i < testCollection.count(); i++) {
 | Function | Description |
 | :------- | :---------- |
 | `count()`  | Returns number of objects in the collection |
-| `getPosition()`  | Returns the current iterator position |
+| `position()`  | Returns the current iterator position |
 | `first()`  | Returns the first element in the collection |
 | `last()`  | Returns the last element in the collection |
 | `current()`  | Returns current element according to the iterator position |
@@ -85,7 +85,7 @@ myCollection.orderBy('name', 'desc');
  - `replace(key, element)`: Replace object with key
  - `first()`: Get the first element in the collection
  - `last()`: Get the last element in the collection
- - `getPosition()`: Returns current iterator position
+ - `position()`: Returns current iterator position
  - `next()`: Returns current object and increases the iterator
  - `hasNext()`: Returns true or false if the collection has more elements
  - `current()`: Returns current element

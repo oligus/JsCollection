@@ -12,7 +12,7 @@
 
     function JsCollection(elementsArray) {
         this.elements   = [];
-        this.position   = 0;
+        this.iteratorPosition   = 0;
 
         if(this.isArray(elementsArray) && elementsArray.length) {
             this.setArray(elementsArray);
@@ -27,8 +27,8 @@
         return Object.prototype.toString.call(a) === '[object Array]';
     };
 
-    JsCollection.prototype.getPosition = function() {
-        return this.position;
+    JsCollection.prototype.position = function() {
+        return this.iteratorPosition;
     };
 
     JsCollection.prototype.addElement = function (element) {
@@ -42,7 +42,7 @@
     };
 
     JsCollection.prototype.getElement = function(key) {
-        key = key || this.position;
+        key = key || this.iteratorPosition;
         if(this.containsKey(key)) {
             return this.elements[key];
         }
@@ -68,7 +68,7 @@
     };
 
     JsCollection.prototype.remove = function (key) {
-        key = key || this.position;
+        key = key || this.iteratorPosition;
         if(this.containsKey(key)) {
             var removed = this.getElement(key);
             this.elements.splice(key, 1);
@@ -78,12 +78,12 @@
 
     JsCollection.prototype.next = function() {
         if(this.hasNext()) {
-            return this.elements[this.position++];
+            return this.elements[this.iteratorPosition++];
         }
     };
 
     JsCollection.prototype.hasNext = function() {
-        return this.position < this.count();
+        return this.iteratorPosition < this.count();
     };
 
     JsCollection.prototype.replace = function(key, element) {
@@ -107,7 +107,7 @@
 
     JsCollection.prototype.clear = function() {
         this.elements = [];
-        this.position = 0;
+        this.iteratorPosition = 0;
     };
 
     JsCollection.prototype.setArray = function (elementsArray) {
@@ -117,20 +117,20 @@
     };
 
     JsCollection.prototype.current = function () {
-        return this.elements[this.position];
+        return this.elements[this.iteratorPosition];
     };
 
     JsCollection.prototype.rewind = function () {
-        this.position = 0;
-        return this.elements[this.position];
+        this.iteratorPosition = 0;
+        return this.elements[this.iteratorPosition];
     };
 
     JsCollection.prototype.insertBefore = function (element) {
-        this.elements.splice(this.position++, 0, element);
+        this.elements.splice(this.iteratorPosition++, 0, element);
     };
 
     JsCollection.prototype.insertAfter = function (element) {
-        this.elements.splice(this.position + 1, 0, element);
+        this.elements.splice(this.iteratorPosition + 1, 0, element);
     };
 
     JsCollection.prototype.each = function (callback) {

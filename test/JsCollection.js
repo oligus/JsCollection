@@ -156,10 +156,10 @@ describe('JsCollection', function() {
 
     it('should return iterator position', function() {
         var testCollection = new JsCollection(myElements);
-        expect(testCollection.getPosition()).toEqual(0);
+        expect(testCollection.position()).toEqual(0);
         testCollection.next();
         testCollection.next();
-        expect(testCollection.getPosition()).toEqual(2);
+        expect(testCollection.position()).toEqual(2);
     });
 
     it('should clear elements', function() {
@@ -181,23 +181,23 @@ describe('JsCollection', function() {
         expect(testCollection.next()).toEqual(myElements[0]);
         expect(testCollection.current()).toEqual(myElements[1]);
         expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.getPosition()).toEqual(1);
+        expect(testCollection.position()).toEqual(1);
         expect(testCollection.next()).toEqual(myElements[1]);
         expect(testCollection.current()).toEqual(myElements[2]);
         expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.getPosition()).toEqual(2);
+        expect(testCollection.position()).toEqual(2);
         expect(testCollection.next()).toEqual(myElements[2]);
         expect(testCollection.current()).toEqual(myElements[3]);
         expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.getPosition()).toEqual(3);
+        expect(testCollection.position()).toEqual(3);
         expect(testCollection.next()).toEqual(myElements[3]);
         expect(testCollection.current()).toEqual(myElements[4]);
         expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.getPosition()).toEqual(4);
+        expect(testCollection.position()).toEqual(4);
         expect(testCollection.next()).toEqual(myElements[4]);
         expect(testCollection.current()).toEqual(myElements[5]);
         expect(testCollection.hasNext()).toBeFalsy();
-        expect(testCollection.getPosition()).toEqual(5);
+        expect(testCollection.position()).toEqual(5);
     });
 
     it('should rewind', function() {
@@ -222,7 +222,7 @@ describe('JsCollection', function() {
         expect(testCollection.current()).toEqual(myElements[2]);
 
         testCollection.insertBefore({ name: 'Before', id: 22 });
-        expect(testCollection.getPosition()).toEqual(3);
+        expect(testCollection.position()).toEqual(3);
         expect(testCollection.current()).toEqual(myElements[2]);
         expect(testCollection.count()).toEqual(6);
     });
@@ -234,7 +234,7 @@ describe('JsCollection', function() {
         expect(testCollection.current()).toEqual(myElements[2]);
 
         testCollection.insertAfter({ name: 'After', id: 22 });
-        expect(testCollection.getPosition()).toEqual(2);
+        expect(testCollection.position()).toEqual(2);
         expect(testCollection.current()).toEqual(myElements[2]);
         expect(testCollection.count()).toEqual(6);
     });
