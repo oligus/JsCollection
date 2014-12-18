@@ -14,9 +14,7 @@
         this.elements   = [];
         this.iteratorPosition   = 0;
 
-        if(this.isArray(elementsArray) && elementsArray.length) {
-            this.setArray(elementsArray);
-        }
+        this.setArray(elementsArray);
     }
 
     JsCollection.prototype.isInt = function (n) {
@@ -31,14 +29,28 @@
         return this.iteratorPosition;
     };
 
+    JsCollection.prototype.count = function () {
+        return this.elements.length;
+    };
+
+    JsCollection.prototype.setArray = function (elementsArray) {
+        if(this.isArray(elementsArray) && elementsArray.length) {
+            this.elements = elementsArray.slice(0);
+        }
+    };
+
     JsCollection.prototype.add = function (element) {
         if(typeof element === 'object' && element !== null) {
             this.elements.push(element);
         }
     };
 
-    JsCollection.prototype.getAll = function() {
-        return this.elements;
+    JsCollection.prototype.addBefore = function (element) {
+        this.elements.splice(this.iteratorPosition++, 0, element);
+    };
+
+    JsCollection.prototype.addAfter = function (element) {
+        this.elements.splice(this.iteratorPosition + 1, 0, element);
     };
 
     JsCollection.prototype.get = function(key) {
@@ -48,8 +60,8 @@
         }
     };
 
-    JsCollection.prototype.count = function () {
-        return this.elements.length;
+    JsCollection.prototype.getAll = function() {
+        return this.elements;
     };
 
     // XXX Needs to be revised
@@ -77,13 +89,15 @@
     };
 
     JsCollection.prototype.next = function() {
+        var element = this.elements[this.iteratorPosition];
         if(this.hasNext()) {
-            return this.elements[this.iteratorPosition++];
+            this.iteratorPosition++;
         }
+        return element;
     };
 
     JsCollection.prototype.hasNext = function() {
-        return this.iteratorPosition < this.count();
+        return this.iteratorPosition < this.count() - 1;
     };
 
     JsCollection.prototype.replace = function(key, element) {
@@ -110,11 +124,7 @@
         this.iteratorPosition = 0;
     };
 
-    JsCollection.prototype.setArray = function (elementsArray) {
-        if(this.isArray(elementsArray) && elementsArray.length) {
-            this.elements = elementsArray.slice(0);
-        }
-    };
+
 
     JsCollection.prototype.current = function () {
         return this.elements[this.iteratorPosition];
@@ -125,13 +135,7 @@
         return this.elements[this.iteratorPosition];
     };
 
-    JsCollection.prototype.insertBefore = function (element) {
-        this.elements.splice(this.iteratorPosition++, 0, element);
-    };
 
-    JsCollection.prototype.insertAfter = function (element) {
-        this.elements.splice(this.iteratorPosition + 1, 0, element);
-    };
 
     JsCollection.prototype.each = function (callback) {
         for(var i = 0, count = this.count(); i < count; i++) {

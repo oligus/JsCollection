@@ -27,6 +27,11 @@ var myElements = [
 
 describe('JsCollection', function() {
 
+    it('should be an instance of JsCollection', function() {
+        var testCollection = new JsCollection(myElements);
+        expect(testCollection instanceof JsCollection).toBe(true);
+    });
+
     it('should check if integer', function() {
         var testCollection = new JsCollection();
         expect(testCollection.isInt(4)).toBeTruthy();
@@ -48,7 +53,11 @@ describe('JsCollection', function() {
 
     it('could be constructed with array', function() {
         var testCollection = new JsCollection(myElements);
-        expect(testCollection instanceof JsCollection).toBe(true);
+        expect(testCollection.getAll()).toEqual(myElements);
+    });
+
+    it('should count', function() {
+        var testCollection = new JsCollection(myElements);
         expect(testCollection.count()).toBe(5);
     });
 
@@ -74,6 +83,30 @@ describe('JsCollection', function() {
         testCollection.add(null);
         expect(testCollection.count()).toBe(5);
         expect(testCollection2.count()).toBe(2);
+    });
+
+    it('should add before current', function() {
+        var testCollection = new JsCollection(myElements);
+        expect(testCollection.next()).toEqual(myElements[0]);
+        expect(testCollection.next()).toEqual(myElements[1]);
+        expect(testCollection.current()).toEqual(myElements[2]);
+
+        testCollection.addBefore({ name: 'Before', id: 22 });
+        expect(testCollection.position()).toEqual(3);
+        expect(testCollection.current()).toEqual(myElements[2]);
+        expect(testCollection.count()).toEqual(6);
+    });
+
+    it('should add after current', function() {
+        var testCollection = new JsCollection(myElements);
+        expect(testCollection.next()).toEqual(myElements[0]);
+        expect(testCollection.next()).toEqual(myElements[1]);
+        expect(testCollection.current()).toEqual(myElements[2]);
+
+        testCollection.addAfter({ name: 'After', id: 22 });
+        expect(testCollection.position()).toEqual(2);
+        expect(testCollection.current()).toEqual(myElements[2]);
+        expect(testCollection.count()).toEqual(6);
     });
 
     it('should return keys', function() {
@@ -108,7 +141,7 @@ describe('JsCollection', function() {
         expect(testCollection.get()).toEqual(myElements[3]);
         testCollection.next();
         testCollection.next();
-        expect(testCollection.get()).toEqual(undefined);
+        expect(testCollection.get()).toEqual(myElements[4]);
     });
 
     it('should return all elements', function() {
@@ -192,12 +225,10 @@ describe('JsCollection', function() {
         expect(testCollection.position()).toEqual(3);
         expect(testCollection.next()).toEqual(myElements[3]);
         expect(testCollection.current()).toEqual(myElements[4]);
-        expect(testCollection.hasNext()).toBeTruthy();
-        expect(testCollection.position()).toEqual(4);
-        expect(testCollection.next()).toEqual(myElements[4]);
-        expect(testCollection.current()).toEqual(myElements[5]);
         expect(testCollection.hasNext()).toBeFalsy();
-        expect(testCollection.position()).toEqual(5);
+        expect(testCollection.next()).toEqual(myElements[4]);
+        expect(testCollection.current()).toEqual(myElements[4]);
+        expect(testCollection.position()).toEqual(4);
     });
 
     it('should rewind', function() {
@@ -213,30 +244,6 @@ describe('JsCollection', function() {
         while(testCollection.hasNext()) {
             expect(testCollection.next()).toEqual(myElements[i++]);
         }
-    });
-
-    it('should insert before current', function() {
-        var testCollection = new JsCollection(myElements);
-        expect(testCollection.next()).toEqual(myElements[0]);
-        expect(testCollection.next()).toEqual(myElements[1]);
-        expect(testCollection.current()).toEqual(myElements[2]);
-
-        testCollection.insertBefore({ name: 'Before', id: 22 });
-        expect(testCollection.position()).toEqual(3);
-        expect(testCollection.current()).toEqual(myElements[2]);
-        expect(testCollection.count()).toEqual(6);
-    });
-
-    it('should insert after current', function() {
-        var testCollection = new JsCollection(myElements);
-        expect(testCollection.next()).toEqual(myElements[0]);
-        expect(testCollection.next()).toEqual(myElements[1]);
-        expect(testCollection.current()).toEqual(myElements[2]);
-
-        testCollection.insertAfter({ name: 'After', id: 22 });
-        expect(testCollection.position()).toEqual(2);
-        expect(testCollection.current()).toEqual(myElements[2]);
-        expect(testCollection.count()).toEqual(6);
     });
 
     it('should iterate with each', function() {
