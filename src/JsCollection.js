@@ -6,14 +6,13 @@
  * Simplify your array of objects
  */
 
-'use strict';
+"use strict";
 
 ( function( window, undefined ) {
 
     function JsCollection(elementsArray) {
         this.elements   = [];
         this.iteratorPosition   = 0;
-
         this.setArray(elementsArray);
     }
 
@@ -23,6 +22,55 @@
 
     JsCollection.prototype.isArray = function (a) {
         return Object.prototype.toString.call(a) === '[object Array]';
+    };
+
+    /**
+     * Set a minimum definition if value is null or undefined, used by orderBy
+     *
+     * @param value
+     * @param direction
+     * @param type
+     * @param inversed
+     * @returns {*}
+     */
+    JsCollection.prototype.doDefine = function (value, direction, type, inversed) {
+        direction   = direction     || 'asc';
+        type        = type          || 'integer';
+        inversed    = inversed      || false;
+
+        if(value === null || value === undefined) {
+            switch(type) {
+                case 'integer':
+                    value = (direction === 'asc') ? -1e6 : 1e6;
+                    break;
+
+                case 'char':
+                    value = (direction === 'asc') ? 'Z' : '@'; // @ is smaller than A
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        switch(type) {
+            case 'integer':
+                if(value <= 0 && inversed) {
+                    value = (direction === 'asc') ? 1e6 : -1e6;
+                }
+                break;
+
+            case 'char':
+                if(value <= 'a' && inversed) {
+                    value = (direction === 'asc') ? '@' : 'Z';
+                }
+                break;
+
+            default:
+                break;
+        }
+
+        return value;
     };
 
     JsCollection.prototype.position = function() {
@@ -143,29 +191,41 @@
         }
     };
 
-    JsCollection.prototype.orderBy = function (property, direction) {
-        direction = direction || 'asc';
+    /**
+     * Order collection by property
+     *
+     * @param property
+     * @param direction
+     * @param type
+     * @param inversed
+     */
+    JsCollection.prototype.orderBy = function (property, direction, type, inversed) {
+        direction   = direction     || 'asc';
+        type        = type          || 'integer';
+        inversed    = inversed      || false;
+
+        var _properties = this.isArray(property) ? property : [property],
+            that = this;
 
         this.elements.sort(function (a, b) {
 
-            if(!a.hasOwnProperty(property)) {
-                return false;
+            for (var i = 0; i < _properties.length; i++) {
+                var prop = _properties[i];
+
+                if (!a.hasOwnProperty(prop) || !b.hasOwnProperty(prop)) {
+                    return false;
+                }
+
+                a = a[prop];
+                b = b[prop];
+
+                a = that.doDefine(a, direction, type, inversed);
+                b = that.doDefine(b, direction, type, inversed);
             }
 
-            if (a[property] > b[property]) {
-                if(direction === 'desc') {
-                    return -1;
-                }
-                return 1;
-            }
-            if (a[property] < b[property]) {
-                if(direction === 'desc') {
-                    return 1;
-                }
-                return -1;
-            }
+            var dir = direction === 'desc' ? -1 : 1;
 
-            return 0;
+            return dir * (a > b ? 1 : a < b ? -1 : 0);
         });
     };
 

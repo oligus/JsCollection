@@ -1,27 +1,47 @@
-/*global JsCollection*/
+/*global JsCollection, describe, it, expect*/
 
 "use strict";
 
 var myElements = [
     {
         name: 'Test Test1',
-        id: 24
+        id: 24,
+        type: {
+            first: 'A',
+            second: 'B'
+        }
     },
     {
         name: 'Abba Test2',
-        id: 10
+        id: 10,
+        type: {
+            first: 'C',
+            second: 'B'
+        }
     },
     {
         name: 'Zee Test3',
-        id: 55
+        id: 55,
+        type: {
+            first: 'A',
+            second: 'C'
+        }
     },
     {
         name: 'Bentley Test4',
-        id: 1
+        id: 1,
+        type: {
+            first: 'D',
+            second: 'D'
+        }
     },
     {
         name: 'Moo says the cow',
-        id: 77
+        id: 77,
+        type: {
+            first: 'F',
+            second: 'A'
+        }
     }
 ];
 
@@ -49,6 +69,29 @@ describe('JsCollection', function() {
         expect(testCollection.isArray(['23', {'a':'b'}])).toBeTruthy();
         expect(testCollection.isArray('4')).toBeFalsy();
         expect(testCollection.isInt({5:[4]})).toBeFalsy();
+    });
+
+    it('should set definition', function() {
+        var testCollection = new JsCollection();
+
+        // Normal null values
+        expect(testCollection.doDefine(null, 'asc', 'integer', false)).toEqual(-1000000);
+        expect(testCollection.doDefine(null, 'desc', 'integer', false)).toEqual(1000000);
+        expect(testCollection.doDefine(null, 'asc', 'char', false)).toEqual('Z');
+        expect(testCollection.doDefine(null, 'desc', 'char', false)).toEqual('@');
+
+        // Normal undefined values
+        expect(testCollection.doDefine(undefined, 'asc', 'integer', false)).toEqual(-1000000);
+        expect(testCollection.doDefine(undefined, 'desc', 'integer', false)).toEqual(1000000);
+        expect(testCollection.doDefine(undefined, 'asc', 'char', false)).toEqual('Z');
+        expect(testCollection.doDefine(undefined, 'desc', 'char', false)).toEqual('@');
+
+        // Inversed
+        expect(testCollection.doDefine(null, 'asc', 'integer', true)).toEqual(1000000);
+        expect(testCollection.doDefine(-10, 'desc', 'integer', true)).toEqual(-1000000);
+        expect(testCollection.doDefine(null, 'asc', 'char', true)).toEqual('@');
+        expect(testCollection.doDefine('A', 'desc', 'char', true)).toEqual('Z');
+
     });
 
     it('could be constructed with array', function() {
@@ -257,20 +300,116 @@ describe('JsCollection', function() {
     it('should order by property', function() {
         var testCollection = new JsCollection(myElements);
         testCollection.orderBy('name', 'asc');
-        var testArray = [ { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 }, { name: 'Moo says the cow', id: 77 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 } ];
+        var testArray = [
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } }
+        ];
         expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('name', 'desc');
-        testArray = [{name: 'Zee Test3', id: 55}, {name: 'Test Test1', id: 24}, {name: 'Moo says the cow', id: 77}, {name: 'Bentley Test4', id: 1}, {name: 'Abba Test2', id: 10}];
+        testArray = [
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } }
+        ];
         expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('id');
-        testArray = [ { name: 'Bentley Test4', id: 1 }, { name: 'Abba Test2', id: 10 }, { name: 'Test Test1', id: 24 }, { name: 'Zee Test3', id: 55 }, { name: 'Moo says the cow', id: 77 } ];
+        testArray = [
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+        ];
         expect(testCollection.getAll()).toEqual(testArray);
 
         testCollection.orderBy('id', 'desc');
-        testArray = [ { name: 'Moo says the cow', id: 77 }, { name: 'Zee Test3', id: 55 }, { name: 'Test Test1', id: 24 }, { name: 'Abba Test2', id: 10 }, { name: 'Bentley Test4', id: 1 } ];
+        testArray = [
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } }
+        ];
         expect(testCollection.getAll()).toEqual(testArray);
     });
+
+    it('should order by extended property', function() {
+        var testCollection = new JsCollection(myElements);
+        testCollection.orderBy(['type','first'], 'asc');
+        var testArray = [
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } }
+        ];
+        expect(testCollection.getAll()).toEqual(testArray);
+
+        testCollection.orderBy(['type','second'], 'desc');
+        testArray = [
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'A', second: 'C' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } }
+        ];
+        expect(testCollection.getAll()).toEqual(testArray);
+
+    });
+
+    it('should order by extended property with null and undefined', function() {
+        var testCollection = new JsCollection(myElements);
+        myElements[2].type.first  = null;
+        testCollection.orderBy(['type','first'], 'asc', 'char');
+        var testArray = [
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+            { name: 'Zee Test3',        id: 55, type: { first: null, second: 'C' } }
+        ];
+        expect(testCollection.getAll()).toEqual(testArray);
+
+
+        myElements[2].type.first  = 'undefined';
+        testCollection.orderBy(['type','first'], 'asc', 'char');
+        testArray = [
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'A' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'undefined', second: 'C' } }
+        ];
+        expect(testCollection.getAll()).toEqual(testArray);
+
+        myElements[4].type.second  = null;
+        testCollection.orderBy(['type','second'], 'desc', 'char');
+        testArray = [
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'undefined', second: 'C' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: null } },
+        ];
+        expect(testCollection.getAll()).toEqual(testArray);
+
+        testArray = [
+            { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
+            { name: 'Zee Test3',        id: 55, type: { first: 'undefined', second: 'C' } },
+            { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
+            { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
+            { name: 'Moo says the cow', id: 77, type: { first: 'F', second: 'undefined' } },
+        ];
+        myElements[4].type.second = 'undefined';
+        expect(testCollection.getAll()).toEqual(testArray);
+    });
+
 
 });
