@@ -53,11 +53,21 @@ module.exports = function(grunt) {
                 gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
                 globalReplace: false
             }
+        },
+        watch: {
+            scripts: {
+                files: 'src/*.js',
+                tasks: ['uglify'],
+                options: {
+                    livereload: 35729
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-bump');
     grunt.registerTask('default', ['jshint', 'karma','uglify']);

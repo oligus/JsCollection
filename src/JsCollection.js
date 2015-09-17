@@ -11,8 +11,10 @@
 ( function( window, undefined ) {
 
     function JsCollection(elementsArray) {
-        this.elements   = [];
+        this.elements           = [];
         this.iteratorPosition   = 0;
+        this.sortDirection      = '';
+        this.sortProperty       = '';
         this.setArray(elementsArray);
     }
 
@@ -33,7 +35,7 @@
      * @param inversed
      * @returns {*}
      */
-    JsCollection.prototype.doDefine = function (value, direction, type, inversed) {
+    JsCollection.prototype.doDefine = function (value, type, direction, inversed) {
         direction   = direction     || 'asc';
         type        = type          || 'integer';
         inversed    = inversed      || false;
@@ -172,8 +174,6 @@
         this.iteratorPosition = 0;
     };
 
-
-
     JsCollection.prototype.current = function () {
         return this.elements[this.iteratorPosition];
     };
@@ -182,8 +182,6 @@
         this.iteratorPosition = 0;
         return this.elements[this.iteratorPosition];
     };
-
-
 
     JsCollection.prototype.each = function (callback) {
         for(var i = 0, count = this.count(); i < count; i++) {
@@ -199,12 +197,15 @@
      * @param type
      * @param inversed
      */
-    JsCollection.prototype.orderBy = function (property, direction, type, inversed) {
-        direction   = direction     || 'asc';
+    JsCollection.prototype.orderBy = function (property, type, direction, inversed) {
+        this.sortDirection = (this.sortDirection === 'asc') ? 'desc' : 'asc';
+        this.sortProperty = property;
+
+        direction   = direction     || this.sortDirection;
         type        = type          || 'integer';
         inversed    = inversed      || false;
 
-        var _properties = this.isArray(property) ? property : [property],
+        var _properties = this.isArray(this.sortProperty) ? this.sortProperty : [this.sortProperty],
             that = this;
 
         this.elements.sort(function (a, b) {
@@ -219,8 +220,8 @@
                 a = a[prop];
                 b = b[prop];
 
-                a = that.doDefine(a, direction, type, inversed);
-                b = that.doDefine(b, direction, type, inversed);
+                a = that.doDefine(a, type, direction, inversed);
+                b = that.doDefine(b, type, direction, inversed);
             }
 
             var dir = direction === 'desc' ? -1 : 1;

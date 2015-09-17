@@ -75,23 +75,22 @@ describe('JsCollection', function() {
         var testCollection = new JsCollection();
 
         // Normal null values
-        expect(testCollection.doDefine(null, 'asc', 'integer', false)).toEqual(-1000000);
-        expect(testCollection.doDefine(null, 'desc', 'integer', false)).toEqual(1000000);
-        expect(testCollection.doDefine(null, 'asc', 'char', false)).toEqual('Z');
-        expect(testCollection.doDefine(null, 'desc', 'char', false)).toEqual('@');
+        expect(testCollection.doDefine(null, 'integer', 'asc', false)).toEqual(-1000000);
+        expect(testCollection.doDefine(null, 'integer', 'desc', false)).toEqual(1000000);
+        expect(testCollection.doDefine(null, 'char', 'asc', false)).toEqual('Z');
+        expect(testCollection.doDefine(null, 'char', 'desc', false)).toEqual('@');
 
         // Normal undefined values
-        expect(testCollection.doDefine(undefined, 'asc', 'integer', false)).toEqual(-1000000);
-        expect(testCollection.doDefine(undefined, 'desc', 'integer', false)).toEqual(1000000);
-        expect(testCollection.doDefine(undefined, 'asc', 'char', false)).toEqual('Z');
-        expect(testCollection.doDefine(undefined, 'desc', 'char', false)).toEqual('@');
+        expect(testCollection.doDefine(undefined, 'integer', 'asc', false)).toEqual(-1000000);
+        expect(testCollection.doDefine(undefined, 'integer', 'desc', false)).toEqual(1000000);
+        expect(testCollection.doDefine(undefined, 'char', 'asc', false)).toEqual('Z');
+        expect(testCollection.doDefine(undefined, 'char', 'desc', false)).toEqual('@');
 
         // Inversed
-        expect(testCollection.doDefine(null, 'asc', 'integer', true)).toEqual(1000000);
-        expect(testCollection.doDefine(-10, 'desc', 'integer', true)).toEqual(-1000000);
-        expect(testCollection.doDefine(null, 'asc', 'char', true)).toEqual('@');
-        expect(testCollection.doDefine('A', 'desc', 'char', true)).toEqual('Z');
-
+        expect(testCollection.doDefine(null, 'integer', 'asc', true)).toEqual(1000000);
+        expect(testCollection.doDefine(-10, 'integer', 'desc', true)).toEqual(-1000000);
+        expect(testCollection.doDefine(null, 'char', 'asc', true)).toEqual('@');
+        expect(testCollection.doDefine('A', 'char', 'desc', true)).toEqual('Z');
     });
 
     it('could be constructed with array', function() {
@@ -367,7 +366,7 @@ describe('JsCollection', function() {
     it('should order by extended property with null and undefined', function() {
         var testCollection = new JsCollection(myElements);
         myElements[2].type.first  = null;
-        testCollection.orderBy(['type','first'], 'asc', 'char');
+        testCollection.orderBy(['type','first'], 'char', 'asc');
         var testArray = [
             { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
             { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
@@ -379,7 +378,7 @@ describe('JsCollection', function() {
 
 
         myElements[2].type.first  = 'undefined';
-        testCollection.orderBy(['type','first'], 'asc', 'char');
+        testCollection.orderBy(['type','first'], 'char', 'asc');
         testArray = [
             { name: 'Test Test1',       id: 24, type: { first: 'A', second: 'B' } },
             { name: 'Abba Test2',       id: 10, type: { first: 'C', second: 'B' } },
@@ -390,7 +389,7 @@ describe('JsCollection', function() {
         expect(testCollection.getAll()).toEqual(testArray);
 
         myElements[4].type.second  = null;
-        testCollection.orderBy(['type','second'], 'desc', 'char');
+        testCollection.orderBy(['type','second'], 'char', 'desc');
         testArray = [
             { name: 'Bentley Test4',    id: 1,  type: { first: 'D', second: 'D' } },
             { name: 'Zee Test3',        id: 55, type: { first: 'undefined', second: 'C' } },
@@ -410,6 +409,5 @@ describe('JsCollection', function() {
         myElements[4].type.second = 'undefined';
         expect(testCollection.getAll()).toEqual(testArray);
     });
-
 
 });
