@@ -70,5 +70,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-bump');
-    grunt.registerTask('default', ['jshint', 'karma','uglify']);
+    grunt.registerTask('default', ['jshint', 'karma', 'uglify']);
 };

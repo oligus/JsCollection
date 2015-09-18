@@ -8,7 +8,7 @@
 
 "use strict";
 
-( function( window, undefined ) {
+( function() {
 
     function JsCollection(elementsArray) {
         this.elements           = [];
@@ -230,7 +230,13 @@
         });
     };
 
-    window.JsCollection = JsCollection;
+    if (typeof module !== 'undefined' && module.exports) {
+        module.exports = JsCollection;
+    } else if (typeof define === 'function') {
+        define(function() { return JsCollection; });
+    } else {
+        window.JsCollection = JsCollection;
+    }
 
-} )( window );
+})();
 
