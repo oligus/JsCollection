@@ -229,6 +229,6 @@
     };
 
     window.JsCollection = JsCollection;
-
+    
 } )( window );
 
